@@ -15,17 +15,28 @@ Install:
 ```
 yarn
 ```
+or
+```
+npm install
+```
 
 Run:
 ```
 yarn dev
+```
+or
+```
+npm run dev
 ```
 
 Lint:
 ```
 yarn lint
 ```
-
+or
+```
+npm run lint
+```
 
 ## Expanding the ESLint configuration
 
