@@ -7,9 +7,12 @@ import {
 
 import Layout from './components/Layout'
 import App from './App'
-// import Pagination from './Pagination'
+import Pagination from './Pagination'
 import ErrorPage from './Error'
 import './index.css'
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -21,13 +24,16 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
       },
+      {
+        path: "/pagination",
+        element:     
+        <QueryClientProvider client={queryClient}>
+          <Pagination />,
+        </QueryClientProvider>
+      },
       // {
       //   path: "/query",
       //   element: <Query />,
-      // },
-      // {
-      //   path: "/pagination",
-      //   element: <Pagination />,
       // },
     ]
   },

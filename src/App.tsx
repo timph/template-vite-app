@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, memo } from 'react'
 import { 
   Grid, 
   Group, 
@@ -25,16 +25,25 @@ const transformResult = (jsonResult: { results: any }) => {
   return jsonResult.results;
 }
 
-const renderElements = (elements: any[]) => {
-  return elements.map((element: any) => (
+const Element = memo(({ element }: any) => {
+  console.log('Element', element.name)
+  return (
     <tr key={element.name}>
       <td>{element.name}</td>
       <td>{element.gender}</td>
       <td>{element.hair_color}</td>
       <td>{element.eye_color}</td>
     </tr>
-  ))
-}
+  )
+}, (prev, next) => prev.element.name === next.element.name)
+
+const RenderElements = memo(({ elements }: { elements: any[]} ) => {
+  console.log('RenderElements')
+  return (elements.map((element: any) => (
+    <Element key={element.name} element={element} />
+  )))
+})
+
 
 function App() {
   const [submitting, setSubmitting] = useState(false)
@@ -70,7 +79,7 @@ function App() {
     }
   }
 
-  const abortableFetch = async () => {
+  const abortableFetch = useCallback(async () => {
     setSubmitting(true)
     setErrorMsg(null)
 
@@ -88,6 +97,7 @@ function App() {
       }
       const data = await res.json()
       const elements = transformResult(data)
+      console.log({ elements })
       setSubmitting(false)
       if (!Array.isArray(elements))  {
         return setErrorMsg('API data is not array')
@@ -98,7 +108,7 @@ function App() {
       setSubmitting(false)
       setErrorMsg('Network call error!')
     }
-  }
+  }, [searchTerm])
 
   return (
     <main>
@@ -134,7 +144,7 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-              {elements && renderElements(elements)}
+              {elements && <RenderElements elements={elements} />}
               {!elements && submitting && <Loader variant='bars' size='lg' style={{ marginTop: '4rem' }} />}
               </tbody>
             </Table>
