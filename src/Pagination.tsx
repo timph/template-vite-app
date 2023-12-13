@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { 
   Grid, 
   Group, 
@@ -23,7 +23,7 @@ const transformResult = (jsonResult: { results: any }) => {
   return jsonResult.results;
 }
 
-const renderElements = (data) => {
+const renderElements = (data: { results: any }) => {
   const { results } = data
   return results.map((element: any) => (
     <tr key={element.name}>
@@ -45,8 +45,8 @@ const fetchPeople = (page: number) => fetch(URL + `?page=${page}`, {
 //   .then(data => transformResult(data))
 
 function Pagination() {
-    const [page, setPage] = useState(1)
-    const { isLoading, isError, error, data, isFetching, isPreviousData } =
+  const [page, setPage] = useState(1)
+  const { isLoading, isError, error, data, isFetching, isPreviousData } =
       useQuery(
         ['people', page],
         () => fetchPeople(page), { keepPreviousData : true }
@@ -80,7 +80,7 @@ function Pagination() {
           </Group>
           <Group position='center' style={{ marginTop: '4rem' }}>
             {isError ? (
-                <Alert title="ERROR" color="red">{error.message}</Alert>
+                <Alert title="ERROR" color="red">{error?.message}</Alert>
             ) : null
             }
 

@@ -11,6 +11,8 @@ import Pagination from './Pagination'
 import ErrorPage from './Error'
 import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import Pokemon from './Pokemon'
+import Query from './Query'
 
 const queryClient = new QueryClient();
 
@@ -25,16 +27,20 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
+        path: "/pokemon",
+        element: <Pokemon />,
+      },
+      {
         path: "/pagination",
         element:     
         <QueryClientProvider client={queryClient}>
           <Pagination />,
         </QueryClientProvider>
       },
-      // {
-      //   path: "/query",
-      //   element: <Query />,
-      // },
+      {
+        path: "/query",
+        element: <Query />,
+      },
     ]
   },
 ]);

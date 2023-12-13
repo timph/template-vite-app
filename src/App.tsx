@@ -24,9 +24,9 @@ const headers = [
 const transformResult = (jsonResult: { results: any }) => {
   return jsonResult.results;
 }
+const compareElement = (prev: any, next:any ) => prev.element.name === next.element.name;
 
 const Element = memo(({ element }: any) => {
-  console.log('Element', element.name)
   return (
     <tr key={element.name}>
       <td>{element.name}</td>
@@ -35,9 +35,9 @@ const Element = memo(({ element }: any) => {
       <td>{element.eye_color}</td>
     </tr>
   )
-}, (prev, next) => prev.element.name === next.element.name)
+}, compareElement)
 
-const RenderElements = memo(({ elements }: { elements: any[]} ) => {
+const RenderElements = memo(({ elements = []}: { elements: any[]} ) => {
   console.log('RenderElements')
   return (elements.map((element: any) => (
     <Element key={element.name} element={element} />
