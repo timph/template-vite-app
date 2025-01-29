@@ -111,7 +111,7 @@ const LazyLoadTable: React.FC<LazyLoadTableProps> = ({ columns, data, loadMore, 
   );
 };
 
-const scrollHeight: React.FC = () => {
+const ScrollHeight: React.FC = () => {
   const [data, setData] = useState<TableData[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
@@ -161,4 +161,4 @@ const scrollHeight: React.FC = () => {
   );
 };
 
-export default scrollHeight;
+export default ScrollHeight;
